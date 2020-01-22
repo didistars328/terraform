@@ -2,6 +2,4 @@
 */terraform.tfstate
 */terraform.tfstate.backup
 */.terraform
-*/mykey*
-terraform-course/terraform_demos/*
-!terraform-course/terraform_demos/terraform/
+*/mykey
