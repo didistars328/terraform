@@ -10,5 +10,35 @@ resource "aws_instance" "example" {
 
   # the public SSH key
   key_name = aws_key_pair.mykeypair.key_name
+
+  # sample file provision
+  provisioner "file" {
+    source = "sample.sh"
+    destination = "/tmp/sample.sh"
+  }
+
+  # edit file permissions and execute
+  provisioner "remote-exec" {
+    inline = [
+      "chmod +x /tmp/sample.sh",
+      "sudo /tmp/sample.sh",
+    ]
+  }
+
+  # run local terminal command and redirect to a file
+  provisioner "local-exec" {
+    command = <<EOT
+    echo ${aws_instance.example.private_ip}  > local_action.txt
+    echo ${aws_instance.example.private_dns} >> local_action.txt
+    EOT
+  }
+
+  # to connect to your instance U Must haven these settings
+  connection {
+    host = coalesce(self.public_ip, self.private_ip)
+    type = "ssh"
+    user = var.INSTANCE_USERNAME
+    private_key = file(var.PATH_TO_PRIVATE_KEY)
+  }
 }
 
