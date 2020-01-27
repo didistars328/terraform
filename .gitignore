@@ -1,4 +1,5 @@
 terraform-course/
+local_action.txt
 */terraform.tfvars
 */terraform.tfstate
 */terraform.tfstate.backup
