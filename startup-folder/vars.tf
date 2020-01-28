@@ -22,3 +22,7 @@ variable "AMIS" {
 variable "INSTANCE_USERNAME" {
   default = "ec2-user"
 }
+
+variable "INSTANCE_DEVICE_NAME" {
+  default = "/dev/xvdh"
+}
