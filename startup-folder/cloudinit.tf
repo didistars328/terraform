@@ -9,6 +9,7 @@ data "template_file" "shell-script" {
   template = file("volumes.sh")
   vars = {
     DEVICE = var.INSTANCE_DEVICE_NAME
+    MOUNT_POINT = "/data"
   }
 }
 
