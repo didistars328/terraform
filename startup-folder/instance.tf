@@ -3,6 +3,9 @@ resource "aws_instance" "example" {
   ami           = var.AMIS[var.AWS_REGION]
   instance_type = "t2.micro"
 
+  # private ip - from vpc subnet
+  private_ip = "10.0.1.4"
+
   # the VPC subnet
   subnet_id = aws_subnet.main-public-1.id
 
@@ -69,5 +72,5 @@ resource "aws_volume_attachment" "ebs-volume-1-attachment" {
   device_name  = var.INSTANCE_DEVICE_NAME
   volume_id    = aws_ebs_volume.ebs-volume-1.id
   instance_id  = aws_instance.example.id
-  skip_destroy = true                            # skip destroy to avoid issues with terraform destroy
+  skip_destroy = true # skip destroy to avoid issues with terraform destroy
 }

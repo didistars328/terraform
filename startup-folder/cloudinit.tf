@@ -8,19 +8,19 @@ data "template_file" "init_script" {
 data "template_file" "shell-script" {
   template = file("volumes.sh")
   vars = {
-    DEVICE = var.INSTANCE_DEVICE_NAME
+    DEVICE      = var.INSTANCE_DEVICE_NAME
     MOUNT_POINT = "/data"
   }
 }
 
 data "template_cloudinit_config" "cloud-init-simple" {
-  gzip = false
+  gzip          = false
   base64_encode = false
 
   part {
-    filename = "cloud_init.cfg"
+    filename     = "cloud_init.cfg"
     content_type = "text/cloud-config"
-    content = data.template_file.init_script.rendered
+    content      = data.template_file.init_script.rendered
   }
 
   part {

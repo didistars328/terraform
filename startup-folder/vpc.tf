@@ -114,4 +114,11 @@ resource "aws_route_table_association" "main-public-3-a" {
   subnet_id      = aws_subnet.main-public-3.id
   route_table_id = aws_route_table.main-public.id
 }
+### ADD ELASTIC IP TO THE INSTANCE ###
 
+#resource "aws_eip" "example" {
+#  vpc = true
+#  instance                  = aws_instance.example.id
+#  associate_with_private_ip = "10.0.1.4"
+#  depends_on                = [aws_internet_gateway.main-gw]
+#}
