@@ -1,6 +1,9 @@
-resource "aws_route53_zone" "didistars328-freedom" {
-  name = "didistars328.tk"
-}
+### TO CREATE HOSTING ZONE ###
+### UNCOMMENT THIS SECTION ###
+
+#resource "aws_route53_zone" "didistars328-freedom" {
+#  name = "didistars328.tk"
+#}
 ### ADD DNS PUBLIC NAMES ###
 ###  TO USE ELASTIC IPS  ###
 ###   INDICATE AWS_EIP   ###

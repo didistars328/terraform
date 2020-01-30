@@ -9,11 +9,14 @@ output "dns" {
 output "subnet" {
   value = aws_instance.example.subnet_id
 }
+### OUTPUT FOR ROUTE 53 ###
 
-output "ns-servers" {
-  value = aws_route53_zone.didistars328-freedom.name_servers
-}
+#output "ns-servers" {
+#  value = aws_route53_zone.didistars328-freedom.name_servers
+#}
 
-output "eip-output" {
-  value = aws_eip.example.public_ip
-}
+### OUTPUT FOR ELASTIC IP ###
+
+#output "eip-output" {
+#  value = aws_eip.example.public_ip
+#}
