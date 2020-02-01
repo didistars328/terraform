@@ -51,6 +51,9 @@ resource "aws_instance" "example" {
   # add cloud-config part
   user_data = data.template_cloudinit_config.cloud-init-simple.rendered
 
+  # to add s3 role - uncomment these lines and s3.tf
+  #iam_instance_profile = aws_iam_instance_profile.s3-bucket-profile.name
+
   # add TAG to your instance
   tags = {
     Name = "test-box"
