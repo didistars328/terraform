@@ -9,6 +9,13 @@ output "dns" {
 output "subnet" {
   value = aws_instance.example.subnet_id
 }
+
+### OUTPUT FOR RDS ###
+
+#output "rds" {
+#  value = aws_db_instance.mariadb.endpoint
+#}
+
 ### OUTPUT FOR ROUTE 53 ###
 
 #output "ns-servers" {
