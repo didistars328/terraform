@@ -26,6 +26,3 @@ variable "INSTANCE_USERNAME" {
 variable "INSTANCE_DEVICE_NAME" {
   default = "/dev/xvdh"
 }
-
-#variable "MARIADB_PASS" {
-#}

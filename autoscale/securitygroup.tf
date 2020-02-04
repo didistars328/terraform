@@ -17,16 +17,38 @@ resource "aws_security_group" "allow-example" {
   }
 
   ingress {
+    from_port       = 80
+    protocol        = "tcp"
+    to_port         = 80
+    security_groups = [aws_security_group.lb-security.id]
+  }
+  tags = {
+    Name = "allow-ssh-tcp"
+  }
+}
+
+resource "aws_security_group" "lb-security" {
+  vpc_id      = aws_vpc.main.id
+  name        = "lb"
+  description = "security group for load balancer"
+  egress {
+    from_port   = 0
+    protocol    = "-1"
+    to_port     = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
     from_port   = 80
     protocol    = "tcp"
     to_port     = 80
     cidr_blocks = ["0.0.0.0/0"]
   }
+
   tags = {
-    Name = "allow-ssh"
+    Name = "ELB"
   }
 }
-
 ### ENABLE TO WORK WITH RDS ###
 ### RENAME  "rds.tf.rename" ###
 

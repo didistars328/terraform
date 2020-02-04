@@ -114,19 +114,3 @@ resource "aws_route_table_association" "main-public-3-a" {
   subnet_id      = aws_subnet.main-public-3.id
   route_table_id = aws_route_table.main-public.id
 }
-### ADD ELASTIC IP TO THE INSTANCE ###
-
-#resource "aws_eip" "example" {
-#  vpc = true
-#  instance                  = aws_instance.example.id
-#  associate_with_private_ip = "10.0.1.4"
-#  depends_on                = [aws_internet_gateway.main-gw]
-#}
-
-### ADD RDS SUBNET GROUP ###
-
-#resource "aws_db_subnet_group" "maria_db" {
-#  name = "mariadb_subnet"
-#  description = "Private subnet RDS group"
-#  subnet_ids = [aws_subnet.main-private-1.id, aws_subnet.main-private-2.id]
-#}
