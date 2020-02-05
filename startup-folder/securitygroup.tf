@@ -25,10 +25,6 @@ resource "aws_security_group" "allow-example" {
   tags = {
     Name = "allow-ssh"
   }
-}
-
-### ENABLE TO WORK WITH RDS ###
-### RENAME  "rds.tf.rename" ###
 
 #resource "aws_security_group" "allow_mariadb" {
 #  vpc_id      = aws_vpc.main.id

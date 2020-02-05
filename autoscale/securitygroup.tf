@@ -50,7 +50,7 @@ resource "aws_security_group" "lb-security" {
   }
 }
 ### ENABLE TO WORK WITH RDS ###
-### RENAME  "rds.tf.rename" ###
+### RENAME  "rds.tf" ###
 
 #resource "aws_security_group" "allow_mariadb" {
 #  vpc_id      = aws_vpc.main.id
