@@ -20,7 +20,7 @@ resource "aws_elastic_beanstalk_environment" "elastic-beanstalk-env" {
   setting {
     name      = "AssociatePublicIpAddress"
     namespace = "aws:ec2:vpc"
-    value     = false
+    value     = "false"
   }
   setting {
     name      = "IamInstanceProfile"
