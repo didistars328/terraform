@@ -1,16 +1,34 @@
+# Define an AMI
+data "aws_ami" "amazon-linux-2" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-hvm-*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  owners = ["137112412989"]
+}
+
 # Go with aws_instance
 resource "aws_instance" "example" {
-  ami           = var.AMIS[var.AWS_REGION]
+  ami           = data.aws_ami.amazon-linux-2.id # or use "ami = var.AMIS[var.AWS_REGION]"
   instance_type = "t2.micro"
 
+  ### Only use with resource aws_ami ###
   # private ip - from vpc subnet
-  private_ip = "10.0.1.4"
+  #private_ip = "10.0.1.4"
 
   # the VPC subnet
-  subnet_id = aws_subnet.main-public-1.id
+  subnet_id = var.ENV == "prod" ? module.vpc-prod.public_subnets[0] : module.vpc-dev.public_subnets[0]
 
   # the security group
-  vpc_security_group_ids = [aws_security_group.allow-example.id]
+  vpc_security_group_ids = [var.ENV == "prod" ? aws_security_group.allow-example-prod.id : aws_security_group.allow-example-dev.id]
 
   # the public SSH key
   key_name = aws_key_pair.mykeypair.key_name

@@ -1,132 +1,39 @@
-# Internet VPC
-resource "aws_vpc" "main" {
-  cidr_block           = "10.0.0.0/16"
-  instance_tenancy     = "default"
-  enable_dns_support   = "true"
-  enable_dns_hostnames = "true"
-  enable_classiclink   = "false"
-  tags = {
-    Name = "main"
-  }
-}
+module "vpc-dev" {
+  source               = "terraform-aws-modules/vpc/aws"
+  version              = "2.24.0"
+  name                 = "vpc-dev"
+  cidr                 = "10.0.0.0/16"
+  enable_dns_hostnames = true
+  enable_dns_support   = true
+  azs                  = ["${var.AWS_REGION}a", "${var.AWS_REGION}b", "${var.AWS_REGION}c"]
+  private_subnets      = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+  public_subnets       = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
 
-# Subnets
-resource "aws_subnet" "main-public-1" {
-  vpc_id                  = aws_vpc.main.id
-  cidr_block              = "10.0.1.0/24"
-  map_public_ip_on_launch = "true"
-  availability_zone       = "eu-central-1a"
+  enable_nat_gateway = false
+  enable_vpn_gateway = false
 
   tags = {
-    Name = "main-public-1"
+    Terraform   = "true"
+    Environment = "dev"
   }
 }
 
-resource "aws_subnet" "main-public-2" {
-  vpc_id                  = aws_vpc.main.id
-  cidr_block              = "10.0.2.0/24"
-  map_public_ip_on_launch = "true"
-  availability_zone       = "eu-central-1b"
+module "vpc-prod" {
+  source               = "terraform-aws-modules/vpc/aws"
+  version              = "2.24.0"
+  name                 = "vpc-prod"
+  cidr                 = "10.0.0.0/16"
+  enable_dns_hostnames = true
+  enable_dns_support   = true
+  azs                  = ["${var.AWS_REGION}a", "${var.AWS_REGION}b", "${var.AWS_REGION}c"]
+  private_subnets      = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+  public_subnets       = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
+
+  enable_nat_gateway = false
+  enable_vpn_gateway = false
 
   tags = {
-    Name = "main-public-2"
+    Terraform   = "true"
+    Environment = "prod"
   }
 }
-
-resource "aws_subnet" "main-public-3" {
-  vpc_id                  = aws_vpc.main.id
-  cidr_block              = "10.0.3.0/24"
-  map_public_ip_on_launch = "true"
-  availability_zone       = "eu-central-1c"
-
-  tags = {
-    Name = "main-public-3"
-  }
-}
-
-resource "aws_subnet" "main-private-1" {
-  vpc_id                  = aws_vpc.main.id
-  cidr_block              = "10.0.4.0/24"
-  map_public_ip_on_launch = "false"
-  availability_zone       = "eu-central-1a"
-
-  tags = {
-    Name = "main-private-1"
-  }
-}
-
-resource "aws_subnet" "main-private-2" {
-  vpc_id                  = aws_vpc.main.id
-  cidr_block              = "10.0.5.0/24"
-  map_public_ip_on_launch = "false"
-  availability_zone       = "eu-central-1b"
-
-  tags = {
-    Name = "main-private-2"
-  }
-}
-
-resource "aws_subnet" "main-private-3" {
-  vpc_id                  = aws_vpc.main.id
-  cidr_block              = "10.0.6.0/24"
-  map_public_ip_on_launch = "false"
-  availability_zone       = "eu-central-1c"
-
-  tags = {
-    Name = "main-private-3"
-  }
-}
-
-# Internet GW
-resource "aws_internet_gateway" "main-gw" {
-  vpc_id = aws_vpc.main.id
-
-  tags = {
-    Name = "main"
-  }
-}
-
-# route tables
-resource "aws_route_table" "main-public" {
-  vpc_id = aws_vpc.main.id
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.main-gw.id
-  }
-
-  tags = {
-    Name = "main-public-1"
-  }
-}
-
-# route associations public
-resource "aws_route_table_association" "main-public-1-a" {
-  subnet_id      = aws_subnet.main-public-1.id
-  route_table_id = aws_route_table.main-public.id
-}
-
-resource "aws_route_table_association" "main-public-2-a" {
-  subnet_id      = aws_subnet.main-public-2.id
-  route_table_id = aws_route_table.main-public.id
-}
-
-resource "aws_route_table_association" "main-public-3-a" {
-  subnet_id      = aws_subnet.main-public-3.id
-  route_table_id = aws_route_table.main-public.id
-}
-### ADD ELASTIC IP TO THE INSTANCE ###
-
-#resource "aws_eip" "example" {
-#  vpc = true
-#  instance                  = aws_instance.example.id
-#  associate_with_private_ip = "10.0.1.4"
-#  depends_on                = [aws_internet_gateway.main-gw]
-#}
-
-### ADD RDS SUBNET GROUP ###
-
-#resource "aws_db_subnet_group" "maria_db" {
-#  name = "mariadb_subnet"
-#  description = "Private subnet RDS group"
-#  subnet_ids = [aws_subnet.main-private-1.id, aws_subnet.main-private-2.id]
-#}

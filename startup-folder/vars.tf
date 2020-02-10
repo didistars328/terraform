@@ -29,3 +29,8 @@ variable "INSTANCE_DEVICE_NAME" {
 
 #variable "MARIADB_PASS" {
 #}
+
+### Only use with data aws_ami ###
+variable "ENV" {
+  default = "prod"
+}
