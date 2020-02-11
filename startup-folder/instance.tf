@@ -83,9 +83,7 @@ resource "aws_ebs_volume" "ebs-volume-1" {
   availability_zone = "eu-central-1a"
   size              = 20
   type              = "gp2"
-  tags = {
-    Name = "extra volume data"
-  }
+  tags              = { for o, l in merge({ Name = "My_volume" }, var.tags_values) : o => lower(l) }
 }
 
 # Attached volume

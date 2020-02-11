@@ -1,0 +1,25 @@
+# terraform console
+
+> help
+> "hello it's just a string"
+> replace("Hello this is a string", "e", "!")
+> "the server was launched at ${timestamp()}" # doesn't work on a newer console
+> formatdate("DD MMM YYYY hh:mm ZZZ", "2018-01-02T23:12:01Z")
+> list("subnet1", "subnet2", "subnet3")
+> split(",", "subnet1,subnet2,subnet3")
+> element(list("subnet1","subnet2","subnet3"), 0)
+> slice(list("subnet1","subnet2","subnet3"), 0, 2)
+> join(",", slice(list("subnet1","subnet2","subnet3"), 0, 2))
+> join(":", slice(list("subnet1","subnet2","subnet3"), 0, 2))
+> map("eu-west-1","ami-1","eu-east-1","ami-2")
+> merge({"a"="b", "c"="d"}, {"e"="f", "c"="z"})
+> lookup(map("eu-west-1","ami-1","eu-east-1","ami-2"),"eu-east-1")
+> index(list("subnet1", "subnet2", "subnet3"),"subnet2")
+> substr("abcd",0,3) ; substr("abcd",1,3) or negative substr("abcd",-1,1) ; substr("abcd",-2,2) ...
+# For Loop
+> [for s in ["a","b","c"]:s] ; [for s in ["a","b","c"]:upper(s)] ; [for s in ["a","b","c"]:lower(s)]
+> [for s in var.varname:s+1] # only for digits
+> [for s in var.varname:upper(s)] # only for words
+# For 2 values:
+> [for o,l in var.varname:o]
+> {for o,l in var.map1:o => l} ; {for o,l in var.map1:l => o}
