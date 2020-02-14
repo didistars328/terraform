@@ -6,3 +6,7 @@ local_action.txt
 */.terraform
 */mykey
 */*.pub
+terraform.tfvars
+terraform.tfstate
+terraform.tfstate.backup
+**/.terraform/
