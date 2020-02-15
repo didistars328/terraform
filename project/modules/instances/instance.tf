@@ -6,23 +6,9 @@ variable "PATH_TO_PUBLIC_KEY" {default = "mykey.pub"}
 variable "VPC_ID" {}
 variable "PORTS" {}
 variable "PUBLIC_SUBNETS" {type = list(string)}
+variable "AMI" {}
 
-# 2. Specify AMI
-
-data "aws_ami" "amazon2" {
-  most_recent = true
-  filter {
-    name   = "name"
-    values = ["amzn2-ami-hvm-*"]
-  }
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-  owners = ["137112412989"]
-}
-
-# 3. Add security groups
+# 2. Add security groups
 
 resource "aws_security_group" "allow-ssh" {
   vpc_id = var.VPC_ID
@@ -47,16 +33,16 @@ resource "aws_security_group" "allow-ssh" {
   }
 }
 
-# 4. Specify piblic KEY
+# 3. Specify piblic KEY
 
 resource "aws_key_pair" "mykey-pub" {
   public_key = file("${path.root}/${var.PATH_TO_PUBLIC_KEY}")
   key_name = "mykey-${var.ENV}"
 }
 
-# 5. Describe AWS Instance
+# 4. Describe AWS Instance
 resource "aws_instance" "instance" {
-  ami = data.aws_ami.amazon2.id
+  ami = var.AMI
   instance_type = var.INSTANCE_TYPE
   subnet_id = element(var.PUBLIC_SUBNETS,0)
   vpc_security_group_ids = [aws_security_group.allow-ssh.id]

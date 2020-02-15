@@ -10,4 +10,5 @@ module "instances" {
   VPC_ID         = module.main-vpc.vpc_id
   PUBLIC_SUBNETS = module.main-vpc.public_subnets
   PORTS          = var.PORTS
+  AMI            = data.aws_ami.amazon2.id
 }
