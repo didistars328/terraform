@@ -5,7 +5,9 @@ local_action.txt
 */terraform.tfstate.backup
 */.terraform
 */mykey
-*/*.pub
+**/mykey/
+**/*.pub
+/*.pub/
 terraform.tfvars
 terraform.tfstate
 terraform.tfstate.backup
