@@ -13,7 +13,7 @@ pipeline {
         stage('Prepare') {
             steps {
                 sh '''
-                cd prod
+                cd project/prod
                 echo "variable "APP_INSTANCE_COUNT" {default = "0"}" >> var.tf
                 aws s3 cp s3://${S3_BUCKET}/amivar amivar.tf
                 touch mykey
