@@ -7,6 +7,7 @@ variable "VPC_ID" {}
 variable "PORTS" {}
 variable "PUBLIC_SUBNETS" {type = list(string)}
 variable "AMI" {}
+variable "APP_INSTANCE_COUNT" {}
 
 # 2. Add security groups
 
