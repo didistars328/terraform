@@ -6,7 +6,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                build Build_AMI
+                build job: 'Build_AMI'
             }
         }
 
