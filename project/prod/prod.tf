@@ -7,7 +7,7 @@ module "main-vpc" {
 module "instances" {
   source         = "../modules/instances"
   ENV            = "prod"
-  AMI            = var.AMI_ID
+  AMI            = var.AMI
   VPC_ID         = module.main-vpc.vpc_id
   PUBLIC_SUBNETS = module.main-vpc.public_subnets
   PORTS          = var.PORTS
