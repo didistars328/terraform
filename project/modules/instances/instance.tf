@@ -43,6 +43,7 @@ resource "aws_key_pair" "mykey-pub" {
 # 4. Describe AWS Instance
 resource "aws_instance" "instance" {
   ami = var.AMI
+  count         = var.APP_INSTANCE_COUNT
   instance_type = var.INSTANCE_TYPE
   subnet_id = element(var.PUBLIC_SUBNETS,0)
   vpc_security_group_ids = [aws_security_group.allow-ssh.id]
