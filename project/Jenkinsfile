@@ -26,7 +26,7 @@ pipeline {
                 sh '''
                 cd project/prod
                 terraform init
-                terraform apply -auto-approve -var APP_INSTANCE_COUNT=1'
+                terraform apply -auto-approve -var APP_INSTANCE_COUNT=1
                 '''
             }
         }
