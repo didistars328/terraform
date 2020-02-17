@@ -16,8 +16,8 @@ pipeline {
                 cd project/prod
                 echo "variable "APP_INSTANCE_COUNT" {default = "0"}" >> var.tf
                 aws s3 cp s3://${S3_BUCKET}/amivar.tf amivar.tf
-                touch mykey
-                touch mykey.pub
+                cat /var/jenkins_home/keys/remote-key > mykey
+                cat /var/jenkins_home/keys/remote-key.pub mykey.pub
                 '''
             }
         }
