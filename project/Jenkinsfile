@@ -10,12 +10,6 @@ pipeline {
             }
         }
 
-        post {
-            always {
-                build job:'/var/jenkins_home/workspace/DEPLOY_AMI', parameters: [string(name: 'S3_BUCKET', value: "${params.S3_BUCKET}")], propagate: false
-            }
-        }
-
         stage('Prepare') {
             steps {
                 sh '''
@@ -30,6 +24,12 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh 'terraform apply -auto-approve -var APP_INSTANCE_COUNT=1'
+            }
+        }
+
+        post {
+            always {
+                build job:'/var/jenkins_home/workspace/DEPLOY_AMI', parameters: [string(name: 'S3_BUCKET', value: "${params.S3_BUCKET}")], propagate: false
             }
         }
     }
