@@ -31,6 +31,6 @@ pipeline {
 //             always {
 //                 build job:'/var/jenkins_home/workspace/DEPLOY_AMI', parameters: [string(name: 'S3_BUCKET', value: "${params.S3_BUCKET}")], propagate: false
 //             }
-        }
+//        }
     }
 }
