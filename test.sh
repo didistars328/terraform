@@ -1,5 +1,5 @@
 #!/bin/bash
-folder=project/prod
+folder="project/prod"
 diff="$(git diff HEAD^ --name-only --diff-filter=ACMR "$folder")"
 echo $diff
 if [ ! -z "$diff" ]
