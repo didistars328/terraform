@@ -1,10 +1,10 @@
 #!/bin/bash
-folder="project/prod"
+folder=project/prod
 diff="$(git diff HEAD^ --name-only --diff-filter=ACMR "$folder")"
 echo $diff
 if [ ! -z "$diff" ]
-    then
+then
     echo "It works"
-    else
+else
       echo "Doesn't work"
-    fi
+fi
