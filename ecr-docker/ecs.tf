@@ -20,7 +20,7 @@ resource "aws_launch_configuration" "ecs-app-launchconfig" {
 resource "aws_autoscaling_group" "ecs-app-autoscaling" {
   name = "ecs-app-autoscaling"
   launch_configuration = aws_launch_configuration.ecs-app-launchconfig.name
-  vpc_zone_identifier = []
+  vpc_zone_identifier = [aws_subnet.main-public-1.id, aws_subnet.main-public-2.id]
   max_size = 1
   min_size = 1
   tag {

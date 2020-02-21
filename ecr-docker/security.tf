@@ -36,6 +36,12 @@ resource "aws_security_group" "ecs_security_group" {
     to_port = 3000
     security_groups = [aws_security_group.lb_security_group.id]
   }
+  ingress {
+    from_port = 22
+    protocol = "tcp"
+    to_port = 22
+    cidr_blocks = ["0.0.0.0/0"]
+  }
   tags = {
     Name = "ECS"
   }

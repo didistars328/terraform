@@ -1,7 +1,6 @@
 # 1. Add app teplate and task
-
 data "template_file" "docker-app-template" {
-  template = file("")
+  template = file("app.json.tpl")
   vars = {
     REPOSITORY_URL = replace(aws_ecr_repository.docker-app.repository_url, "https://", "")
   }
@@ -13,7 +12,6 @@ resource "aws_ecs_task_definition" "docker-app-definition" {
 }
 
 # 2. Add Load Balancer
-
 resource "aws_elb" "docker-app-elb" {
   listener {
     instance_port = 3000
