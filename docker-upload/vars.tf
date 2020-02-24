@@ -15,7 +15,7 @@ variable "ECS_AMIS" {
   default = {
     us-east-1    = "ami-062f7200baf2fa504"
     us-west-2    = "ami-04590e7389a6e577c"
-    eu-central-1 = "ami-0bfdae54e0eda93f2"  # ECS AMI exect ami optimized for ECS only
+    eu-central-1 = "ami-0bfdae54e0eda93f2"
   }
 }
 

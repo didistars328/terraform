@@ -9,7 +9,11 @@ resource "aws_launch_configuration" "ecs-app-launchconfig" {
   name_prefix = "ecs-launchconfig"
   key_name = aws_key_pair.mykeypair.key_name
   security_groups = [aws_security_group.ecs_security_group.id]
-  user_data = "#!/bin/bash\necho 'ECS_CLUSTER=example-cluster' > /etc/ecs/ecs.config\nstart ecs"
+  user_data = <<EOF
+     #!/bin/bash
+     echo 'ECS_CLUSTER=cluster-ecs-app' > /etc/ecs/ecs.config
+     start ecs
+     EOF
   iam_instance_profile = aws_iam_instance_profile.ecs_ec2_role.id
   lifecycle {
     create_before_destroy = true

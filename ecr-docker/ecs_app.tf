@@ -13,6 +13,8 @@ resource "aws_ecs_task_definition" "docker-app-definition" {
 
 # 2. Add Load Balancer
 resource "aws_elb" "docker-app-elb" {
+  name = "docker-app-elb"
+
   listener {
     instance_port = 3000
     instance_protocol = "http"
@@ -52,7 +54,7 @@ resource "aws_ecs_service" "docker-app-service" {
 
   load_balancer {
     elb_name = aws_elb.docker-app-elb.name
-    container_name = "docker-app-elb"
+    container_name = "docker-app"
     container_port = 3000
   }
 
