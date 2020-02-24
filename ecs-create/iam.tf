@@ -1,7 +1,6 @@
 # 1. ECS ec2 role
-
-resource "aws_iam_role" "ecs_ec2_role" {
-  name = "ecs-ec2-role"
+resource "aws_iam_role" "ecs-ec2-role" {
+  name               = "ecs-ec2-role"
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -20,9 +19,29 @@ EOF
 
 }
 
-resource "aws_iam_role_policy" "ecs_ec2_role_policy" {
-  name = "cs-ec2-role-policy"
-  role = aws_iam_role.ecs_ec2_role.id
+resource "aws_iam_role" "ecs-consul-server-role" {
+  name               = "ecs-consul-server-role"
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
+
+}
+
+resource "aws_iam_role_policy" "ecs-ec2-role-policy" {
+  name   = "ecs-ec2-role-policy"
+  role   = aws_iam_role.ecs-ec2-role.id
   policy = <<EOF
 {
     "Version": "2012-10-17",
@@ -65,15 +84,14 @@ EOF
 
 }
 
-resource "aws_iam_instance_profile" "ecs_ec2_role" {
+resource "aws_iam_instance_profile" "ecs-ec2-role" { # Here could be profile need to test
   name = "ecs-ec2-role"
-  role = aws_iam_role.ecs_ec2_role.name
+  role = aws_iam_role.ecs-ec2-role.name
 }
 
 # 2. ECS service role
-
-resource "aws_iam_role" "ecs_service_role" {
-  name = "ecs-service-role"
+resource "aws_iam_role" "ecs-service-role" {
+  name               = "ecs-service-role"
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -92,8 +110,8 @@ EOF
 
 }
 
-resource "aws_iam_policy_attachment" "ecs_service_attachment" {
-  name = "ecs-service-attachment"
-  roles = [aws_iam_role.ecs_service_role.name]
+resource "aws_iam_policy_attachment" "ecs-service-attachment" {
+  name       = "ecs-service-attachment"
+  roles      = [aws_iam_role.ecs-service-role.name]
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceRole"
 }

@@ -2,7 +2,7 @@
   {
     "essential": true,
     "memory": 256,
-    "name": "docker-app",
+    "name": "app",
     "cpu": 256,
     "image": "${REPOSITORY_URL}:1",
     "workingDirectory": "/app",
