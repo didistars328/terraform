@@ -30,3 +30,7 @@ variable "ECS_INSTANCE_TYPE" {
 variable "INSTANCE_DEVICE_NAME" {
   default = "/dev/xvdh"
 }
+
+variable "REPO_NAME" {
+  default = "0"
+}
