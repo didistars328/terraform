@@ -2,7 +2,7 @@
   {
     "essential": true,
     "memory": 256,
-    "name": "${REPO_NAME}",
+    "name": "${APP_NAME}",
     "cpu": 256,
     "image": "${REPOSITORY_URL}:1",
     "workingDirectory": "/app",

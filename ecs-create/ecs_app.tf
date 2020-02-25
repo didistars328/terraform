@@ -4,6 +4,7 @@ data "template_file" "app-task-definition-template" {
   vars = {
     REPOSITORY_URL = replace(var.REPOSITORY, "https://", "")
     APP_VERSION    = var.MYAPP_VERSION
+    APP_NAME = var.REPO_NAME
   }
 }
 
