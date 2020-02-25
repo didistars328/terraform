@@ -3,6 +3,7 @@ data "template_file" "app-task-definition-template" {
   template = file("app.json.tpl")
   vars = {
     REPOSITORY_URL = replace(aws_ecr_repository.app.repository_url, "https://", "")
+    APP_VERSION    = var.MYAPP_VERSION
   }
 }
 
@@ -45,6 +46,7 @@ resource "aws_elb" "app-elb" {
 
 # 3. Add ECS Service
 resource "aws_ecs_service" "app-service" {
+  count           = var.MYAPP_SERVICE_ENABLE
   name            = "app"
   cluster         = aws_ecs_cluster.cluster-ecs.id
   task_definition = aws_ecs_task_definition.app-task-definition.arn
