@@ -42,3 +42,7 @@ variable "REPO_NAME" {
 variable "MYAPP_VERSION" {
   default = "0"
 }
+
+variable "REPOSITORY" {
+  default = "0"
+}

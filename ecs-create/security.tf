@@ -1,5 +1,5 @@
 resource "aws_security_group" "elb-security-group" {
-  name        = "app-elb"
+  name        = "${var.REPO_NAME}-elb"
   description = "security group for ecs"
   vpc_id      = aws_vpc.main.id
   egress {
@@ -15,7 +15,7 @@ resource "aws_security_group" "elb-security-group" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   tags = {
-    Name = "app-elb"
+    Name = "${var.REPO_NAME}-elb"
   }
 }
 

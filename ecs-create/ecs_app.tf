@@ -2,19 +2,19 @@
 data "template_file" "app-task-definition-template" {
   template = file("app.json.tpl")
   vars = {
-    REPOSITORY_URL = replace(aws_ecr_repository.app.repository_url, "https://", "")
+    REPOSITORY_URL = replace(var.REPOSITORY, "https://", "")
     APP_VERSION    = var.MYAPP_VERSION
   }
 }
 
 resource "aws_ecs_task_definition" "app-task-definition" {
-  family                = "app"
+  family                = var.REPO_NAME
   container_definitions = data.template_file.app-task-definition-template.rendered
 }
 
 # 2. Add Load Balancer
 resource "aws_elb" "app-elb" {
-  name = "app-elb"
+  name = "${var.REPO_NAME}-elb"
 
   listener {
     instance_port     = 3000
@@ -40,14 +40,14 @@ resource "aws_elb" "app-elb" {
   security_groups = [aws_security_group.elb-security-group.id]
 
   tags = {
-    Name = "app-elb"
+    Name = "${var.REPO_NAME}-elb"
   }
 }
 
 # 3. Add ECS Service
 resource "aws_ecs_service" "app-service" {
   count           = var.MYAPP_SERVICE_ENABLE
-  name            = "app"
+  name            = var.REPO_NAME
   cluster         = aws_ecs_cluster.cluster-ecs.id
   task_definition = aws_ecs_task_definition.app-task-definition.arn
   desired_count   = 1
@@ -56,7 +56,7 @@ resource "aws_ecs_service" "app-service" {
 
   load_balancer {
     elb_name       = aws_elb.app-elb.name
-    container_name = "app"
+    container_name = var.REPO_NAME
     container_port = 3000
   }
 
