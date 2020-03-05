@@ -19,7 +19,6 @@ resource "aws_security_group" "elb-security-group" {
   }
 }
 
-
 resource "aws_security_group" "ecs-security-group" {
   name        = "ecs"
   description = "security group for ecs"
